@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Portfolio · Bourezaz Othmane | Acheteur & Gestionnaire de Stock & Magasinier</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #0a0f1e 0%, #111827 50%, #0f172a 100%); color: #e2e8f0; line-height: 1.6; overflow-x: hidden; }
+        .container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+        /* Animations */
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(234, 179, 8, 0); } 100% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0); } }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        /* Navigation */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); padding: 15px 30px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; z-index: 1000; border-bottom: 1px solid rgba(234, 179, 8, 0.3); }
+        .logo { font-size: 26px; font-weight: 800; color: white; }
+        .logo span { color: #eab308; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 25px; }
+        .nav-links a { color: #cbd5e1; text-decoration: none; font-weight: 500; font-size: 14px; transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.5px; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: #eab308; transition: width 0.3s; }
+        .nav-links a:hover { color: #eab308; }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Hero */
+        .hero { min-height: 100vh; display: flex; align-items: center; padding: 100px 0 60px; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 800px; height: 800px; background: radial-gradient(circle, rgba(234, 179, 8, 0.08) 0%, transparent 70%); border-radius: 50%; }
+        .hero-content { width: 100%; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; align-items: center; position: relative; z-index: 2; }
+        .hero-text .greeting { color: #eab308; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; animation: fadeInUp 0.8s ease-out 0.2s forwards; opacity: 0; }
+        .hero-text h1 { font-size: 54px; font-weight: 800; color: white; line-height: 1.2; margin-bottom: 15px; animation: fadeInUp 0.8s ease-out 0.4s forwards; opacity: 0; }
+        .hero-text h1 span { color: #eab308; }
+        .hero-text .profession { font-size: 24px; font-weight: 600; color: #94a3b8; margin-bottom: 20px; animation: fadeInUp 0.8s ease-out 0.6s forwards; opacity: 0; }
+        .hero-text .description { font-size: 15px; color: #cbd5e1; margin-bottom: 30px; max-width: 550px; animation: fadeInUp 0.8s ease-out 0.8s forwards; opacity: 0; }
+        .hero-stats { display: flex; gap: 40px; margin-bottom: 30px; animation: fadeInUp 0.8s ease-out 1s forwards; opacity: 0; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 38px; font-weight: 800; color: #eab308; }
+        .stat-label { font-size: 13px; color: #94a3b8; text-transform: uppercase; }
+        .btn-group { display: flex; gap: 15px; animation: fadeInUp 0.8s ease-out 1.2s forwards; opacity: 0; }
+        .btn { padding: 14px 30px; border-radius: 50px; font-weight: 600; font-size: 14px; text-decoration: none; transition: all 0.3s; text-transform: uppercase; display: inline-flex; align-items: center; gap: 10px; }
+        .btn-primary { background: #eab308; color: #0f172a; border: 2px solid #eab308; }
+        .btn-primary:hover { background: transparent; color: #eab308; transform: translateY(-3px); box-shadow: 0 10px 30px rgba(234, 179, 8, 0.3); }
+        .btn-outline { border: 2px solid #eab308; color: #eab308; }
+        .btn-outline:hover { background: #eab308; color: #0f172a; transform: translateY(-3px); }
+        .hero-image { background: linear-gradient(135deg, rgba(234, 179, 8, 0.15), rgba(44, 83, 100, 0.25)); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; padding: 15px; border: 3px solid rgba(234, 179, 8, 0.4); aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; animation: float 6s ease-in-out infinite, slideInRight 1s ease-out; }
+        .hero-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+
+        /* Sections */
+        .section { padding: 70px 0; }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header h2 { font-size: 38px; font-weight: 800; color: white; margin-bottom: 15px; text-transform: uppercase; }
+        .section-header h2 span { color: #eab308; }
+        .section-header .underline { width: 80px; height: 3px; background: #eab308; margin: 0 auto; border-radius: 2px; }
+
+        /* Fonctions (Cards) */
+        .functions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 50px; }
+        .function-card { background: linear-gradient(145deg, #1e293b, #111827); border-radius: 25px; padding: 35px 25px; border: 1px solid rgba(234, 179, 8, 0.2); transition: all 0.4s; position: relative; overflow: hidden; }
+        .function-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, #eab308, #fbbf24, #eab308); background-size: 200% 100%; animation: gradientShift 3s infinite; }
+        .function-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(234, 179, 8, 0.1); border-color: #eab308; }
+        .function-icon { width: 80px; height: 80px; background: rgba(234, 179, 8, 0.1); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; transition: all 0.3s; }
+        .function-card:hover .function-icon { background: #eab308; transform: rotate(5deg); }
+        .function-card:hover .function-icon i { color: #0f172a; }
+        .function-icon i { font-size: 40px; color: #eab308; transition: all 0.3s; }
+        .function-card h3 { font-size: 24px; font-weight: 700; color: white; margin-bottom: 20px; }
+        .function-card .function-subtitle { color: #eab308; font-size: 14px; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .task-list { list-style: none; }
+        .task-list li { color: #cbd5e1; font-size: 14px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: flex-start; gap: 12px; transition: all 0.3s; }
+        .task-list li:hover { color: white; padding-left: 8px; }
+        .task-list li i { color: #10b981; font-size: 14px; margin-top: 2px; flex-shrink: 0; }
+        .task-list li:last-child { border-bottom: none; }
+
+        /* Compétences techniques */
+        .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 40px; }
+        .skill-category { background: rgba(30, 41, 59, 0.5); border-radius: 18px; padding: 25px 20px; border: 1px solid rgba(234, 179, 8, 0.1); transition: all 0.3s; }
+        .skill-category:hover { border-color: #eab308; background: rgba(30, 41, 59, 0.7); }
+        .skill-category h4 { color: #eab308; font-size: 18px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .skill-category ul { list-style: none; }
+        .skill-category li { color: #cbd5e1; font-size: 13px; padding: 8px 0; display: flex; align-items: center; gap: 10px; }
+        .skill-category li i { color: #10b981; font-size: 12px; }
+
+        /* Expérience */
+        .experience-timeline { display: flex; flex-direction: column; gap: 25px; }
+        .exp-item { background: linear-gradient(145deg, #1e293b, #111827); padding: 30px; border-radius: 20px; border: 1px solid rgba(234, 179, 8, 0.15); transition: all 0.3s; }
+        .exp-item.current { border: 2px solid #eab308; animation: pulse 3s infinite; }
+        .exp-item:hover { border-color: #eab308; transform: translateX(10px); }
+        .exp-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .exp-title { font-size: 22px; font-weight: 700; color: white; }
+        .exp-company { color: #eab308; font-size: 16px; font-weight: 600; }
+        .exp-date { background: #eab308; color: #0f172a; padding: 6px 18px; border-radius: 30px; font-weight: 600; font-size: 14px; }
+        .exp-date.current-badge { background: #10b981; color: white; }
+        .achievement-list { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .achievement-list li { display: flex; align-items: flex-start; gap: 12px; color: #cbd5e1; font-size: 14px; }
+        .achievement-list li i { color: #10b981; margin-top: 3px; }
+
+        /* Contact */
+        .contact-section { background: linear-gradient(145deg, #111827, #0a0f1e); border-radius: 25px; padding: 45px 40px; border: 1px solid rgba(234, 179, 8, 0.2); }
+        .contact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+        .contact-card { text-align: center; padding: 25px 15px; background: rgba(30, 41, 59, 0.5); border-radius: 18px; transition: all 0.3s; }
+        .contact-card:hover { background: rgba(234, 179, 8, 0.1); transform: translateY(-5px); }
+        .contact-card i { font-size: 32px; color: #eab308; margin-bottom: 15px; }
+        .contact-card h4 { color: white; font-size: 16px; margin-bottom: 10px; }
+        .contact-card p { color: #94a3b8; font-size: 14px; }
+
+        footer { text-align: center; padding: 25px; color: #64748b; border-top: 1px solid rgba(234, 179, 8, 0.1); }
+
+        @media (max-width: 992px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-text .description { margin: 0 auto 30px; }
+            .hero-stats { justify-content: center; }
+            .btn-group { justify-content: center; }
+            .hero-image { max-width: 350px; margin: 0 auto; }
+            .functions-grid { grid-template-columns: repeat(2, 1fr); }
+            .skills-grid { grid-template-columns: repeat(2, 1fr); }
+            .contact-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .navbar { padding: 12px 20px; }
+            .nav-links { gap: 15px; }
+            .nav-links a { font-size: 12px; }
+            .hero-text h1 { font-size: 40px; }
+            .functions-grid { grid-template-columns: 1fr; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .achievement-list { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .exp-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .btn-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">BOUREZAZ<span>.</span></div>
+        <div class="nav-links">
+            <a href="#accueil">Accueil</a>
+            <a href="#fonctions">Fonctions</a>
+            <a href="#competences">Compétences</a>
+            <a href="#experience">Expérience</a>
+            <a href="#formations">Formations</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Hero -->
+        <section id="accueil" class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="greeting">👋 Bonjour, je suis</div>
+                    <h1>Bourezaz <span>Othmane</span></h1>
+                    <div class="profession">Acheteur · Gestionnaire de Stock · Magasinier</div>
+                    <p class="description">Professionnel polyvalent avec plus de 15 ans d'expérience en gestion des stocks, achats hôteliers, maintenance technique et développement.</p>
+                    <div class="hero-stats">
+                        <div class="stat-item"><div class="stat-number">15+</div><div class="stat-label">Années</div></div>
+                        <div class="stat-item"><div class="stat-number">6</div><div class="stat-label">Magasins créés</div></div>
+                        <div class="stat-item"><div class="stat-number">100%</div><div class="stat-label">Zéro perte</div></div>
+                    </div>
+                    <div class="btn-group">
+                        <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Me contacter</a>
+                        <a href="#fonctions" class="btn btn-outline"><i class="fas fa-tasks"></i> Voir mes fonctions</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://lh3.googleusercontent.com/sgi-eph/AMv4e_zighUxBUgixypl2eEpuTE5WHOUL1Dztet2lXFwxaOE5d1Jf_6_JQ0yKvwb_MFVhz-Vi7jKn-M0ClMp12eBPTYQkJs-MfF6vvka-HzFVv9O4bByVZBcV5ruLNDL_byQsn4R0oG6B04Hw6i0ZzxDyUOSfDg7vY1qx4A=s925" alt="Bourezaz Othmane">
+                </div>
+            </div>
+        </section>
+
+        <!-- Fonctions (Acheteur, Gestionnaire de Stock, Magasinier) -->
+        <section id="fonctions" class="section">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Mes <span>Fonctions</span></h2>
+                <div class="underline"></div>
+                <p style="color: #94a3b8; margin-top: 15px; max-width: 700px; margin-left: auto; margin-right: auto;">Trois rôles complémentaires maîtrisés pour une gestion optimale des approvisionnements et des stocks</p>
+            </div>
+            <div class="functions-grid">
+                <!-- Fonction Acheteur -->
+                <div class="function-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="function-icon"><i class="fas fa-cart-shopping"></i></div>
+                    <h3>Fonction Acheteur</h3>
+                    <div class="function-subtitle">Gestion des Approvisionnements</div>
+                    <ul class="task-list">
+                        <li><i class="fas fa-check-circle"></i> Recherche et sélection des fournisseurs</li>
+                        <li><i class="fas fa-check-circle"></i> Négociation des prix et conditions d'achat</li>
+                        <li><i class="fas fa-check-circle"></i> Établissement des bons de commande</li>
+                        <li><i class="fas fa-check-circle"></i> Suivi des commandes et relances fournisseurs</li>
+                        <li><i class="fas fa-check-circle"></i> Gestion des problèmes de paiement fournisseurs</li>
+                        <li><i class="fas fa-check-circle"></i> Élargissement du portefeuille fournisseurs</li>
+                        <li><i class="fas fa-check-circle"></i> Achat d'équipements (Rayonnage, Chariots, Frigo...)</li>
+                        <li><i class="fas fa-check-circle"></i> Réception et contrôle des marchandises</li>
+                        <li><i class="fas fa-check-circle"></i> Saisie et vérification des factures</li>
+                        <li><i class="fas fa-check-circle"></i> Rapprochement achats/consommation avec comptabilité</li>
+                        <li><i class="fas fa-check-circle"></i> Création des documents : Bon d'achat, PV Casse</li>
+                        <li><i class="fas fa-check-circle"></i> Optimisation du budget achats</li>
+                    </ul>
+                </div>
+
+                <!-- Fonction Gestionnaire de Stock -->
+                <div class="function-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="function-icon"><i class="fas fa-chart-pie"></i></div>
+                    <h3>Fonction Gestionnaire de Stock</h3>
+                    <div class="function-subtitle">Pilotage et Optimisation</div>
+                    <ul class="task-list">
+                        <li><i class="fas fa-check-circle"></i> Gestion informatisée sur HOTIX et DLG PC STOCK</li>
+                        <li><i class="fas fa-check-circle"></i> Inventaires mensuels systématiques</li>
+                        <li><i class="fas fa-check-circle"></i> Rapprochement inventaire physique/théorique</li>
+                        <li><i class="fas fa-check-circle"></i> Création du Cahier d'Inventaire annuel</li>
+                        <li><i class="fas fa-check-circle"></i> Classification ABC des articles</li>
+                        <li><i class="fas fa-check-circle"></i> Suivi des dates de péremption (FIFO/LIFO)</li>
+                        <li><i class="fas fa-check-circle"></i> Analyse et rapports de consommation mensuelle</li>
+                        <li><i class="fas fa-check-circle"></i> Optimisation des niveaux de stock</li>
+                        <li><i class="fas fa-check-circle"></i> Réduction des écarts d'inventaire</li>
+                        <li><i class="fas fa-check-circle"></i> Élimination des pertes et vols</li>
+                        <li><i class="fas fa-check-circle"></i> Mise en place de procédures de contrôle</li>
+                        <li><i class="fas fa-check-circle"></i> Rapprochement avec contrôle de gestion</li>
+                    </ul>
+                </div>
+
+                <!-- Fonction Magasinier -->
+                <div class="function-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="function-icon"><i class="fas fa-warehouse"></i></div>
+                    <h3>Fonction Magasinier</h3>
+                    <div class="function-subtitle">Organisation et Logistique</div>
+                    <ul class="task-list">
+                        <li><i class="fas fa-check-circle"></i> Création et structuration des magasins</li>
+                        <li><i class="fas fa-check-circle"></i> 6 magasins créés : Alimentaire, Boissons, Détergent, Bureautique, Vaisselle, Linge</li>
+                        <li><i class="fas fa-check-circle"></i> Organisation des rayons selon normes HACCP</li>
+                        <li><i class="fas fa-check-circle"></i> Gestion de 900+ références articles</li>
+                        <li><i class="fas fa-check-circle"></i> Réception et rangement des marchandises</li>
+                        <li><i class="fas fa-check-circle"></i> Saisie des bons de sortie</li>
+                        <li><i class="fas fa-check-circle"></i> Préparation et distribution aux services</li>
+                        <li><i class="fas fa-check-circle"></i> Maintien de la propreté et de l'ordre</li>
+                        <li><i class="fas fa-check-circle"></i> Installation des équipements de stockage</li>
+                        <li><i class="fas fa-check-circle"></i> Conduite de Mini Clark</li>
+                        <li><i class="fas fa-check-circle"></i> Formation des stagiaires en gestion de stock</li>
+                        <li><i class="fas fa-check-circle"></i> Coordination avec les différents services</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Compétences Techniques -->
+        <section id="competences" class="section">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Compétences <span>Techniques</span></h2>
+                <div class="underline"></div>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
+                    <h4><i class="fas fa-laptop"></i> Logiciels de Gestion</h4>
+                    <ul><li><i class="fas fa-check"></i> HOTIX</li><li><i class="fas fa-check"></i> DLG PC STOCK</li><li><i class="fas fa-check"></i> DLGC</li><li><i class="fas fa-check"></i> Excel (Avancé)</li><li><i class="fas fa-check"></i> Word · PowerPoint</li></ul>
+                </div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="150">
+                    <h4><i class="fas fa-code"></i> Développement</h4>
+                    <ul><li><i class="fas fa-check"></i> HTML5 · CSS3 · JavaScript</li><li><i class="fas fa-check"></i> C# .NET</li><li><i class="fas fa-check"></i> Design Web Responsive</li><li><i class="fas fa-check"></i> Montage Vidéo</li><li><i class="fas fa-check"></i> Design Graphique</li></ul>
+                </div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
+                    <h4><i class="fas fa-tools"></i> Technique & Industrie</h4>
+                    <ul><li><i class="fas fa-check"></i> Maintenance polyvalente</li><li><i class="fas fa-check"></i> Soudure TIG</li><li><i class="fas fa-check"></i> Plaquisterie</li><li><i class="fas fa-check"></i> Conduite Mini Clark</li><li><i class="fas fa-check"></i> Réparation électroménager</li></ul>
+                </div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="250">
+                    <h4><i class="fas fa-star"></i> Atouts Personnels</h4>
+                    <ul><li><i class="fas fa-check"></i> Résolution de problèmes</li><li><i class="fas fa-check"></i> Apprentissage rapide</li><li><i class="fas fa-check"></i> Créativité</li><li><i class="fas fa-check"></i> Polyvalence</li><li><i class="fas fa-check"></i> Rigueur et organisation</li></ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Expérience Professionnelle -->
+        <section id="experience" class="section">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Expérience <span>Professionnelle</span></h2>
+                <div class="underline"></div>
+            </div>
+            <div class="experience-timeline">
+                <div class="exp-item current" data-aos="fade-right">
+                    <div class="exp-header">
+                        <div><div class="exp-title">Acheteur & Gestionnaire de Stock & Magasinier</div><div class="exp-company">Hôtel RALF · Alger</div></div>
+                        <div class="exp-date current-badge">2025 – Présent</div>
+                    </div>
+                    <ul class="achievement-list">
+                        <li><i class="fas fa-check-circle"></i> Création de 6 magasins structurés</li>
+                        <li><i class="fas fa-check-circle"></i> Élimination totale des pertes et vols</li>
+                        <li><i class="fas fa-check-circle"></i> Création documents : Bon sortie, Bon achat, PV Casse</li>
+                        <li><i class="fas fa-check-circle"></i> Achat équipements (Rayonnage, Chariots, Frigo...)</li>
+                        <li><i class="fas fa-check-circle"></i> Mise en conformité HACCP</li>
+                        <li><i class="fas fa-check-circle"></i> Formation de stagiaires</li>
+                        <li><i class="fas fa-check-circle"></i> Rapprochement achats/consommation</li>
+                        <li><i class="fas fa-check-circle"></i> Cahier d'Inventaire annuel</li>
+                    </ul>
+                </div>
+                <div class="exp-item" data-aos="fade-right" data-aos-delay="100">
+                    <div class="exp-header">
+                        <div><div class="exp-title">Agent Technique Polyvalent</div><div class="exp-company">Hôtel Hani · Bab Ezzouar</div></div>
+                        <div class="exp-date">Mars 2022 – Août 2025</div>
+                    </div>
+                    <ul class="achievement-list"><li><i class="fas fa-check-circle"></i> Maintenance quotidienne des installations</li><li><i class="fas fa-check-circle"></i> Réduction des pannes de 20%</li></ul>
+                </div>
+                <div class="exp-item" data-aos="fade-right" data-aos-delay="200">
+                    <div class="exp-header">
+                        <div><div class="exp-title">Magasinier / Gestionnaire de Stock</div><div class="exp-company">Hôtel Hani · Bab Ezzouar</div></div>
+                        <div class="exp-date">Août 2018 – Mars 2022</div>
+                    </div>
+                    <ul class="achievement-list">
+                        <li><i class="fas fa-check-circle"></i> Gestion de 900+ articles sur HOTIX et DLGC</li>
+                        <li><i class="fas fa-check-circle"></i> Organisation selon HACCP, FIFO/LIFO, méthode ABC</li>
+                        <li><i class="fas fa-check-circle"></i> Bons de commande, réception, saisie factures</li>
+                        <li><i class="fas fa-check-circle"></i> Rapports consommation et rapprochement inventaire</li>
+                    </ul>
+                </div>
+                <div class="exp-item" data-aos="fade-right" data-aos-delay="300">
+                    <div class="exp-header">
+                        <div><div class="exp-title">Plaquiste / Décorateur</div><div class="exp-company">Hôtel Hani (Projet)</div></div>
+                        <div class="exp-date">Juin 2014 – Juillet 2016</div>
+                    </div>
+                    <ul class="achievement-list"><li><i class="fas fa-check-circle"></i> Installation plafonds suspendus et cloisons</li><li><i class="fas fa-check-circle"></i> Rénovation de 100 chambres</li></ul>
+                </div>
+                <div class="exp-item" data-aos="fade-right" data-aos-delay="400">
+                    <div class="exp-header">
+                        <div><div class="exp-title">Soudeur Pipeline NIV 5</div><div class="exp-company">ENTP · Hassi Messaoud</div></div>
+                        <div class="exp-date">Déc 2013 – Juin 2014</div>
+                    </div>
+                    <ul class="achievement-list"><li><i class="fas fa-check-circle"></i> Soudure TIG acier carbone et inox</li><li><i class="fas fa-check-circle"></i> 100% conformité qualité</li></ul>
+                </div>
+                <div class="exp-item" data-aos="fade-right" data-aos-delay="500">
+                    <div class="exp-header">
+                        <div><div class="exp-title">Soudeur Naval</div><div class="exp-company">ERENAV · Port d'Alger</div></div>
+                        <div class="exp-date">Fév 2009 – Juil 2012</div>
+                    </div>
+                    <ul class="achievement-list"><li><i class="fas fa-check-circle"></i> Réparation et assemblage de pièces de navires</li><li><i class="fas fa-check-circle"></i> +20 projets navals réussis</li></ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formations -->
+        <section id="formations" class="section">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Formations & <span>Certifications</span></h2>
+                <div class="underline"></div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px;">
+                <div style="background: linear-gradient(145deg, #1e293b, #111827); padding: 25px; border-radius: 18px; border: 2px solid #eab308;" data-aos="zoom-in" data-aos-delay="100">
+                    <i class="fas fa-certificate" style="font-size: 35px; color: #eab308; margin-bottom: 15px;"></i>
+                    <h3 style="color: white; margin-bottom: 10px;">DLG PC STOCK <span style="background: #10b981; color: white; padding: 3px 10px; border-radius: 20px; font-size: 11px; margin-left: 10px;">2026</span></h3>
+                    <p style="color: #eab308;">Centre de Formation</p>
+                    <p style="color: #94a3b8;">Attestation obtenue</p>
+                </div>
+                <div style="background: linear-gradient(145deg, #1e293b, #111827); padding: 25px; border-radius: 18px; border: 1px solid rgba(234, 179, 8, 0.2);" data-aos="zoom-in" data-aos-delay="150">
+                    <i class="fas fa-laptop" style="font-size: 35px; color: #eab308; margin-bottom: 15px;"></i>
+                    <h3 style="color: white; margin-bottom: 10px;">Gestion des Stocks (HOTIX)</h3>
+                    <p style="color: #eab308;">Service et Solutions Informatique</p>
+                    <p style="color: #94a3b8;">2018 · Bab Ezzouar</p>
+                </div>
+                <div style="background: linear-gradient(145deg, #1e293b, #111827); padding: 25px; border-radius: 18px; border: 1px solid rgba(234, 179, 8, 0.2);" data-aos="zoom-in" data-aos-delay="200">
+                    <i class="fas fa-welder" style="font-size: 35px; color: #eab308; margin-bottom: 15px;"></i>
+                    <h3 style="color: white; margin-bottom: 10px;">Soudage TIG Inox & Carbone</h3>
+                    <p style="color: #eab308;">École Famme Bleue · Alger</p>
+                    <p style="color: #94a3b8;">2013</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="section">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Me <span>Contacter</span></h2>
+                <div class="underline"></div>
+            </div>
+            <div class="contact-section" data-aos="fade-up">
+                <div class="contact-grid">
+                    <div class="contact-card"><i class="fas fa-map-marker-alt"></i><h4>Adresse</h4><p>Cité Zerhouni Mokhtar AADL Bt14 N°4<br>Mohammadia · Alger</p></div>
+                    <div class="contact-card"><i class="fas fa-phone"></i><h4>Téléphone</h4><p>07 95 58 24 72</p></div>
+                    <div class="contact-card"><i class="fas fa-envelope"></i><h4>Email</h4><p>Bourezaz.work@gmail.com</p></div>
+                    <div class="contact-card"><i class="fas fa-id-card"></i><h4>Informations</h4><p>41 ans · Marié, 1 enfant<br>Permis B · Mini Clark · Véhicule</p></div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;" data-aos="fade-up">
+                <div style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.1), rgba(59, 130, 246, 0.1)); padding: 18px 35px; border-radius: 50px; display: inline-block; border: 1px solid rgba(234, 179, 8, 0.3);">
+                    <i class="fas fa-car" style="color: #eab308; margin-right: 10px;"></i>
+                    <span style="color: white; font-weight: 600;">Véhicule personnel · Mobilité totale · Disponible immédiatement</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 · Bourezaz Othmane · Acheteur · Gestionnaire de Stock · Magasinier</p>
+        <p style="margin-top: 8px; font-size: 12px;">
+            <i class="fas fa-check-circle" style="color: #10b981;"></i> Arabe (Natif) · 
+            <i class="fas fa-check-circle" style="color: #eab308;"></i> Français (Moyen) · 
+            <i class="fas fa-check-circle" style="color: #eab308;"></i> Anglais (Moyen)
+        </p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 100 });
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
+                }
+            });
+        });
+
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            navbar.style.background = window.scrollY > 50 ? 'rgba(15, 23, 42, 0.98)' : 'rgba(15, 23, 42, 0.95)';
+            navbar.style.boxShadow = window.scrollY > 50 ? '0 5px 20px rgba(0,0,0,0.2)' : 'none';
+        });
+    </script>
+</body>
+</html>
