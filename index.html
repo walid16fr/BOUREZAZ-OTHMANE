@@ -3,369 +3,553 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Portfolio · Bourezaz Othmane | Acheteur & Gestionnaire de Stock & Chef Magasin</title>
+    <title>Portfolio UI · Bourezaz Othmane | Acheteur & Gestionnaire de Stock & Chef Magasin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background: linear-gradient(135deg, #0a0f1e 0%, #111827 50%, #0f172a 100%); 
-            color: #e2e8f0; 
-            line-height: 1.5; 
-            overflow-x: hidden; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        /* شاشة الهواتف فقط - عرض محصور بين 320px و 500px */
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #0B1120, #030712);
+            color: #E2E8F0;
+            line-height: 1.5;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Container style moderne avec max-width pour mobile */
+        .container {
+            max-width: 100%;
+            padding: 0 20px;
+            margin: 0 auto;
+        }
+
+        /* Largeur smartphone uniquement (max 500px) sur grands écrans */
         @media (min-width: 768px) {
             body {
-                max-width: 500px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background: #030712;
+            }
+            .container {
+                max-width: 480px;
                 margin: 0 auto;
-                box-shadow: 0 0 30px rgba(0,0,0,0.5);
+                background: radial-gradient(circle at 10% 20%, #0B1120, #030712);
+                box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+                border-radius: 32px 32px 0 0;
             }
         }
-        
-        .container { width: 100%; max-width: 100%; margin: 0 auto; padding: 0 16px; }
 
-        /* شريط القوائم - Menu Bar */
-        .navbar { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            right: 0; 
-            background: rgba(15, 23, 42, 0.96); 
-            backdrop-filter: blur(12px); 
-            padding: 10px 16px; 
-            display: flex; 
+        /* ========== MENU BAR STICKY ========== */
+        .menu-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(234, 179, 8, 0.25);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
-            justify-content: space-between; 
-            align-items: center; 
-            z-index: 1000; 
-            border-bottom: 1px solid rgba(234, 179, 8, 0.3);
+            gap: 12px;
         }
-        @media (min-width: 768px) {
-            .navbar { left: auto; right: auto; width: 500px; }
+
+        .logo h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #EAB308);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
         }
-        .logo { font-size: 18px; font-weight: 800; color: white; }
-        .logo span { color: #eab308; }
-        .nav-links { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-        .nav-links a { 
-            color: #cbd5e1; 
-            text-decoration: none; 
-            font-weight: 500; 
-            font-size: 10px; 
-            transition: all 0.3s; 
-            text-transform: uppercase; 
-            letter-spacing: 0.3px; 
-            padding: 4px 6px;
-            border-radius: 12px;
+
+        .nav-icons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
         }
-        .nav-links a:hover { background: rgba(234,179,8,0.2); color: #eab308; }
-        .lang-btn { background: #eab308; color: #0f172a; border: none; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 600; cursor: pointer; }
 
-        /* Animations */
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+        .nav-icons a {
+            color: #94A3B8;
+            font-size: 1.3rem;
+            transition: all 0.2s ease;
+        }
 
-        /* Hero */
-        .hero { min-height: 100vh; display: flex; align-items: center; padding: 75px 0 40px; position: relative; }
-        .hero-content { width: 100%; display: flex; flex-direction: column; gap: 20px; align-items: center; }
-        .hero-text { text-align: center; width: 100%; }
-        .hero-text .greeting { color: #eab308; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; margin-bottom: 5px; }
-        .hero-text h1 { font-size: 28px; font-weight: 800; color: white; margin-bottom: 6px; }
-        .hero-text .profession { font-size: 14px; font-weight: 600; color: #94a3b8; margin-bottom: 10px; }
-        .hero-text .description { font-size: 12px; color: #cbd5e1; margin-bottom: 18px; padding: 0 5px; }
-        .hero-stats { display: flex; justify-content: center; gap: 25px; margin-bottom: 18px; }
-        .stat-number { font-size: 26px; font-weight: 800; color: #eab308; }
-        .stat-label { font-size: 9px; color: #94a3b8; text-transform: uppercase; }
-        .btn-group { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; flex-direction: column; align-items: stretch; }
-        .btn { padding: 8px 16px; border-radius: 40px; font-weight: 600; font-size: 11px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
-        .btn-primary { background: #eab308; color: #0f172a; border: 2px solid #eab308; }
-        .btn-outline { border: 2px solid #eab308; color: #eab308; background: transparent; }
-        .btn-whatsapp { background: #25D366; color: white; border: 2px solid #25D366; }
-        .hero-image { width: 150px; height: 150px; margin: 0 auto; background: linear-gradient(135deg, rgba(234,179,8,0.15), rgba(44,83,100,0.25)); border-radius: 35% 65% 70% 30% / 35% 35% 65% 65%; padding: 6px; border: 2px solid rgba(234,179,8,0.5); }
-        .hero-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 35% 65% 70% 30% / 35% 35% 65% 65%; }
+        .nav-icons a:hover {
+            color: #EAB308;
+            transform: translateY(-2px);
+        }
 
-        /* Sections */
-        .section { padding: 40px 0; }
-        .section-header { text-align: center; margin-bottom: 25px; }
-        .section-header h2 { font-size: 24px; font-weight: 800; color: white; margin-bottom: 8px; text-transform: uppercase; }
-        .section-header h2 span { color: #eab308; }
-        .section-header .underline { width: 45px; height: 3px; background: #eab308; margin: 0 auto; border-radius: 2px; }
+        .lang-switch {
+            background: #1E293B;
+            border: 1px solid #EAB308;
+            color: #EAB308;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
 
-        /* Cards */
-        .functions-grid, .skills-grid, .contact-grid, .faq-grid, .experience-timeline, .formations-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
-        .function-card, .skill-category, .contact-card, .faq-item, .exp-item, .formation-card { background: linear-gradient(145deg, #1e293b, #111827); border-radius: 18px; padding: 18px; border: 1px solid rgba(234,179,8,0.2); transition: all 0.3s; }
-        .function-card { position: relative; overflow: hidden; }
-        .function-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #eab308, #fbbf24, #eab308); }
-        .function-icon { width: 45px; height: 45px; background: rgba(234,179,8,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
-        .function-icon i { font-size: 24px; color: #eab308; }
-        .function-card h3 { font-size: 17px; margin-bottom: 4px; }
-        .function-card .function-subtitle { font-size: 10px; color: #eab308; margin-bottom: 10px; }
-        .task-list li { font-size: 11px; padding: 5px 0; display: flex; gap: 8px; align-items: flex-start; list-style: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .task-list li i { color: #10b981; font-size: 11px; margin-top: 2px; }
-        .skill-category h4 { font-size: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; color: #eab308; }
-        .skill-category li { font-size: 11px; padding: 4px 0; display: flex; align-items: center; gap: 6px; }
-        .skill-category li i { color: #10b981; font-size: 10px; }
-        .exp-item.current { border: 2px solid #eab308; }
-        .exp-header { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
-        .exp-title { font-size: 15px; font-weight: 700; color: white; }
-        .exp-company { color: #eab308; font-size: 12px; font-weight: 600; }
-        .exp-date { background: #eab308; color: #0f172a; padding: 3px 10px; border-radius: 20px; font-weight: 600; font-size: 10px; display: inline-block; width: fit-content; }
-        .exp-date.current-badge { background: #10b981; color: white; }
-        .achievement-list { list-style: none; display: grid; grid-template-columns: 1fr; gap: 8px; }
-        .achievement-list li { display: flex; align-items: flex-start; gap: 8px; color: #cbd5e1; font-size: 11px; }
-        .achievement-list li i { color: #10b981; font-size: 10px; margin-top: 2px; }
-        .faq-question { color: #eab308; font-size: 14px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .faq-answer { color: #cbd5e1; font-size: 11px; line-height: 1.5; }
-        .contact-card { text-align: center; padding: 14px; }
-        .contact-card i { font-size: 22px; margin-bottom: 8px; }
-        .contact-card h4 { font-size: 13px; margin-bottom: 5px; }
-        .contact-card p { font-size: 10px; }
-        .interests-grid { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
-        .interest-item { background: rgba(234,179,8,0.1); padding: 6px 15px; border-radius: 40px; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(234,179,8,0.3); }
-        .interest-item i { font-size: 16px; color: #eab308; }
-        .interest-item span { font-size: 12px; color: white; }
-        footer { text-align: center; padding: 18px; font-size: 9px; border-top: 1px solid rgba(234,179,8,0.1); }
-        .inline-highlight { padding: 8px 16px; font-size: 11px; display: inline-flex; align-items: center; gap: 8px; background: rgba(234,179,8,0.1); border-radius: 40px; border: 1px solid rgba(234,179,8,0.3); }
-        
+        /* ========== HERO SECTION ========== */
+        .hero-ui {
+            padding: 40px 0 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .hero-badge {
+            background: rgba(234, 179, 8, 0.15);
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #EAB308;
+            backdrop-filter: blur(4px);
+        }
+
+        .hero-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .hero-title span {
+            color: #EAB308;
+        }
+
+        .hero-sub {
+            color: #CBD5E1;
+            font-size: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .hero-desc {
+            text-align: center;
+            color: #94A3B8;
+            font-size: 0.85rem;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            background: rgba(30, 41, 59, 0.5);
+            padding: 14px 20px;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            width: 100%;
+        }
+
+        .stat-ui {
+            text-align: center;
+        }
+
+        .stat-number-ui {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #EAB308;
+        }
+
+        .stat-label-ui {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #94A3B8;
+        }
+
+        .btn-group-ui {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-ui {
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .btn-primary-ui {
+            background: #EAB308;
+            color: #0F172A;
+            border: none;
+        }
+
+        .btn-outline-ui {
+            background: transparent;
+            border: 1.5px solid #EAB308;
+            color: #EAB308;
+        }
+
+        .btn-whatsapp-ui {
+            background: #25D366;
+            color: white;
+            border: none;
+        }
+
+        .avatar-frame {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(145deg, #EAB30820, #1E293B);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            padding: 6px;
+            border: 2px solid #EAB308;
+        }
+
+        .avatar-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        }
+
+        /* ========== SECTIONS UI ========== */
+        .section-ui {
+            padding: 50px 0 30px;
+        }
+
+        .section-header-ui {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .section-header-ui h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: inline-block;
+            background: linear-gradient(135deg, #FFFFFF, #EAB308);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-header-ui .underline {
+            width: 60px;
+            height: 3px;
+            background: #EAB308;
+            margin: 8px auto 0;
+            border-radius: 4px;
+        }
+
+        /* CARDS MODERNES */
+        .grid-3, .grid-skills, .timeline, .grid-faq, .grid-contact, .grid-formations {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .card-ui {
+            background: linear-gradient(145deg, #1E293B, #0F172A);
+            border-radius: 28px;
+            padding: 24px 20px;
+            border: 1px solid rgba(234, 179, 8, 0.2);
+            transition: all 0.25s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .card-ui:hover {
+            border-color: #EAB308;
+            transform: translateY(-4px);
+        }
+
+        .icon-xl {
+            font-size: 2.2rem;
+            color: #EAB308;
+            background: rgba(234, 179, 8, 0.15);
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .skill-chip {
+            background: rgba(234, 179, 8, 0.1);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .exp-header-ui {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .exp-badge {
+            background: #EAB308;
+            color: #0F172A;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        .list-check {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .list-check li {
+            display: flex;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: #CBD5E1;
+            align-items: flex-start;
+        }
+
+        .list-check li i {
+            color: #10B981;
+            margin-top: 2px;
+        }
+
+        .footer-ui {
+            text-align: center;
+            padding: 24px 20px;
+            border-top: 1px solid rgba(234,179,8,0.15);
+            font-size: 0.7rem;
+            color: #64748B;
+        }
+
         @media (min-width: 480px) {
-            .btn-group { flex-direction: row; }
-            .functions-grid, .skills-grid { grid-template-columns: repeat(2, 1fr); }
-            .contact-grid { grid-template-columns: repeat(2, 1fr); }
-            .achievement-list { grid-template-columns: repeat(2, 1fr); }
-            .formations-grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-3, .grid-skills, .timeline, .grid-faq, .grid-contact, .grid-formations {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .exp-header-ui {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+        @media (min-width: 600px) {
+            .grid-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
     </style>
 </head>
 <body>
-    <!-- شريط القوائم -->
-    <nav class="navbar">
-        <div class="logo">BOUREZAZ<span>.</span></div>
-        <div class="nav-links">
-            <a href="#accueil">🏠</a>
-            <a href="#fonctions">📦</a>
-            <a href="#competences">💻</a>
-            <a href="#experience">💼</a>
-            <a href="#formations">📜</a>
-            <a href="#faq">❓</a>
-            <a href="#contact">📞</a>
-            <button class="lang-btn" id="langToggle">🇬🇧 EN</button>
+<div class="container">
+    <!-- Menu Bar -->
+    <div class="menu-bar">
+        <div class="logo"><h2>BOUREZAZ<span style="color:#EAB308;">.</span></h2></div>
+        <div class="nav-icons">
+            <a href="#accueil"><i class="fas fa-home"></i></a>
+            <a href="#fonctions"><i class="fas fa-briefcase"></i></a>
+            <a href="#competences"><i class="fas fa-cogs"></i></a>
+            <a href="#experience"><i class="fas fa-timeline"></i></a>
+            <a href="#contact"><i class="fas fa-envelope"></i></a>
+            <button class="lang-switch" id="langToggle">🇬🇧 EN</button>
         </div>
-    </nav>
+    </div>
 
-    <div class="container" id="app">
-        <!-- Hero -->
-        <section id="accueil" class="hero">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="greeting" data-key="greeting">👋 Bonjour, je suis</div>
-                    <h1>Bourezaz <span>Othmane</span></h1>
-                    <div class="profession" data-key="profession">Acheteur · Gestionnaire de Stock · Chef Magasin</div>
-                    <p class="description" data-key="description">Professionnel polyvalent avec plus de 15 ans d'expérience en gestion des stocks, achats hôteliers, maintenance technique et développement.</p>
-                    <div class="hero-stats">
-                        <div class="stat-item"><div class="stat-number">15+</div><div class="stat-label" data-key="stat1">Années</div></div>
-                        <div class="stat-item"><div class="stat-number">6</div><div class="stat-label" data-key="stat2">Magasins créés</div></div>
-                        <div class="stat-item"><div class="stat-number">&lt;1%</div><div class="stat-label" data-key="stat3">Pertes</div></div>
-                    </div>
-                    <div class="btn-group">
-                        <a href="#contact" class="btn btn-primary" data-key="btn1"><i class="fas fa-paper-plane"></i> Me contacter</a>
-                        <a href="https://wa.me/213795582472" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                        <a href="#fonctions" class="btn btn-outline" data-key="btn2"><i class="fas fa-tasks"></i> Voir mes fonctions</a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="https://lh3.googleusercontent.com/a/ACg8ocIxaz_tZUQlKGcIuq9a-OgzsjXfIq_HgNfsQxKJwM8H0Ep5CMt_=s288-c-no" alt="Bourezaz Othmane">
-                </div>
+    <div id="app">
+        <!-- HERO UI -->
+        <section id="accueil" class="hero-ui">
+            <div class="hero-badge"><i class="fas fa-star-of-life"></i> 15+ ans d'expertise</div>
+            <div class="hero-title">Bourezaz <span>Othmane</span></div>
+            <div class="hero-sub" data-key="profession">Acheteur · Gestionnaire de Stock · Chef Magasin</div>
+            <div class="hero-desc" data-key="description">Professionnel polyvalent avec plus de 15 ans d'expérience en gestion des stocks, achats hôteliers, maintenance technique et développement.</div>
+            <div class="stats-row">
+                <div class="stat-ui"><div class="stat-number-ui">15+</div><div class="stat-label-ui" data-key="stat1">Années</div></div>
+                <div class="stat-ui"><div class="stat-number-ui">6</div><div class="stat-label-ui" data-key="stat2">Magasins créés</div></div>
+                <div class="stat-ui"><div class="stat-number-ui">&lt;1%</div><div class="stat-label-ui" data-key="stat3">Pertes</div></div>
+            </div>
+            <div class="btn-group-ui">
+                <a href="#contact" class="btn-ui btn-primary-ui" data-key="btn1"><i class="fas fa-paper-plane"></i> Me contacter</a>
+                <a href="https://wa.me/213795582472" class="btn-ui btn-whatsapp-ui"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a href="#fonctions" class="btn-ui btn-outline-ui" data-key="btn2"><i class="fas fa-tasks"></i> Voir fonctions</a>
+            </div>
+            <div class="avatar-frame">
+                <img src="https://lh3.googleusercontent.com/a/ACg8ocIxaz_tZUQlKGcIuq9a-OgzsjXfIq_HgNfsQxKJwM8H0Ep5CMt_=s288-c-no" alt="Photo">
             </div>
         </section>
 
         <!-- Fonctions -->
-        <section id="fonctions" class="section">
-            <div class="section-header"><h2>Mes <span data-key="functionsTitle">Fonctions</span></h2><div class="underline"></div></div>
-            <div class="functions-grid" id="functionsGrid"></div>
-        </section>
+        <section id="fonctions" class="section-ui"><div class="section-header-ui"><h2>Mes <span>Fonctions</span></h2><div class="underline"></div></div>
+        <div class="grid-3" id="functionsGrid"></div></section>
 
         <!-- Compétences -->
-        <section id="competences" class="section">
-            <div class="section-header"><h2><span data-key="skillsTitle">Compétences Techniques</span></h2><div class="underline"></div></div>
-            <div class="skills-grid" id="skillsGrid"></div>
-        </section>
+        <section id="competences" class="section-ui"><div class="section-header-ui"><h2>Compétences <span>Techniques</span></h2><div class="underline"></div></div>
+        <div class="grid-skills" id="skillsGrid"></div></section>
 
-        <!-- Expérience complète -->
-        <section id="experience" class="section">
-            <div class="section-header"><h2>Expérience <span data-key="expTitle">Professionnelle</span></h2><div class="underline"></div></div>
-            <div class="experience-timeline" id="experienceList"></div>
-        </section>
+        <!-- Expérience COMPLETE -->
+        <section id="experience" class="section-ui"><div class="section-header-ui"><h2>Expérience <span>Professionnelle</span></h2><div class="underline"></div></div>
+        <div class="timeline" id="expGrid"></div></section>
 
         <!-- Formations -->
-        <section id="formations" class="section">
-            <div class="section-header"><h2>Formations & <span data-key="certsTitle">Certifications</span></h2><div class="underline"></div></div>
-            <div class="formations-grid" id="formationsGrid"></div>
-        </section>
+        <section id="formations" class="section-ui"><div class="section-header-ui"><h2>Formations <span>& Certifications</span></h2><div class="underline"></div></div>
+        <div class="grid-formations" id="formationsGrid"></div></section>
 
-        <!-- Projets & Centres d'intérêt -->
-        <section id="projets" class="section">
-            <div class="section-header"><h2>Mes <span data-key="projectsTitle">Projets</span> & Loisirs</h2><div class="underline"></div></div>
-            <div style="background: linear-gradient(145deg, #1e293b, #111827); border-radius: 18px; padding: 20px; margin-bottom: 25px;">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;"><i class="fas fa-store" style="font-size: 28px; color: #eab308;"></i><h3 style="color: white; font-size: 16px;"><span data-key="ecomTitle">Projets personnels</span> : <span style="color: #eab308;" data-key="ecomValue">Commerce Électronique</span></h3></div>
-                <p style="color: #cbd5e1; font-size: 12px;" data-key="ecomDesc">Expérience dans la création et la gestion de boutiques en ligne. Maîtrise : gestion des commandes, suivi des stocks, relation clients, logistique.</p>
+        <!-- Projets + Centres d'intérêt -->
+        <section class="section-ui">
+            <div class="section-header-ui"><h2>Projets <span>& Loisirs</span></h2><div class="underline"></div></div>
+            <div class="card-ui" style="margin-bottom: 20px;">
+                <i class="fas fa-store" style="font-size: 2rem; color:#EAB308; margin-bottom: 10px;"></i>
+                <h3 style="font-size: 1.2rem;">Commerce Électronique</h3>
+                <p style="color:#CBD5E1; font-size:0.8rem;">Création et gestion de boutiques en ligne : commandes, stocks, relation client, logistique. Une vision globale de la chaîne d'approvisionnement.</p>
             </div>
-            <h3 style="text-align: center; color: white; margin-bottom: 15px; font-size: 16px;"><i class="fas fa-heart" style="color: #eab308;"></i> <span data-key="interestsTitle">Centres d'intérêt</span></h3>
-            <div class="interests-grid">
-                <div class="interest-item"><i class="fas fa-code"></i><span data-key="interest1">Programmation</span></div>
-                <div class="interest-item"><i class="fas fa-futbol"></i><span data-key="interest2">Football</span></div>
-                <div class="interest-item"><i class="fas fa-plane"></i><span data-key="interest3">Voyages</span></div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+                <span class="skill-chip"><i class="fas fa-code"></i> Programmation</span>
+                <span class="skill-chip"><i class="fas fa-futbol"></i> Football</span>
+                <span class="skill-chip"><i class="fas fa-plane"></i> Voyages & Tourisme</span>
             </div>
         </section>
 
-        <!-- FAQ -->
-        <section id="faq" class="section">
-            <div class="section-header"><h2>Ce que les <span data-key="faqTitle">recruteurs</span> recherchent</h2><div class="underline"></div></div>
-            <div class="faq-grid" id="faqGrid"></div>
-        </section>
+        <!-- FAQ UI -->
+        <section id="faq" class="section-ui"><div class="section-header-ui"><h2>Ce que les <span>recruteurs</span> recherchent</h2><div class="underline"></div></div>
+        <div class="grid-faq" id="faqGrid"></div></section>
 
         <!-- Contact -->
-        <section id="contact" class="section">
-            <div class="section-header"><h2>Me <span data-key="contactTitle">Contacter</span></h2><div class="underline"></div></div>
-            <div style="background: linear-gradient(145deg, #111827, #0a0f1e); border-radius: 20px; padding: 25px 15px; border: 1px solid rgba(234,179,8,0.2);">
-                <div class="contact-grid">
-                    <div class="contact-card"><i class="fas fa-map-marker-alt"></i><h4 data-key="addressTitle">Adresse</h4><p>Cité Zerhouni Mokhtar AADL Bt14 N°4<br>Mohammadia · Alger</p></div>
-                    <div class="contact-card"><i class="fas fa-phone"></i><h4 data-key="phoneTitle">Téléphone</h4><p>07 95 58 24 72</p></div>
-                    <div class="contact-card"><i class="fas fa-envelope"></i><h4 data-key="emailTitle">Email</h4><p>Bourezaz.work@gmail.com</p></div>
-                    <div class="contact-card"><i class="fab fa-whatsapp"></i><h4 data-key="whatsappTitle">WhatsApp</h4><p>07 95 58 24 72</p></div>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 20px;"><div class="inline-highlight"><i class="fas fa-car" style="color: #eab308;"></i><span data-key="mobility">Véhicule personnel · Mobilité totale · Disponible immédiatement</span></div></div>
+        <section id="contact" class="section-ui"><div class="section-header-ui"><h2>Me <span>Contacter</span></h2><div class="underline"></div></div>
+        <div class="grid-contact" id="contactGrid"></div>
+        <div style="text-align:center; margin-top:20px;"><div style="background:#1E293B; display:inline-flex; gap:12px; padding:8px 20px; border-radius:40px;"><i class="fas fa-car" style="color:#EAB308;"></i> <span data-key="mobility">Véhicule personnel · Mobilité totale · Disponible immédiatement</span></div></div>
         </section>
     </div>
+    <div class="footer-ui">© 2026 Bourezaz Othmane · Acheteur / Gestionnaire de Stock / Chef Magasin · <span data-key="langFooter">Arabe (natif) · Français moyen · Anglais moyen</span></div>
+</div>
 
-    <footer>
-        <p>© 2026 · Bourezaz Othmane · <span data-key="footer1">Acheteur · Gestionnaire de Stock · Chef Magasin</span></p>
-        <p><i class="fas fa-check-circle" style="color:#10b981;"></i> <span data-key="lang1">Arabe (Langue maternelle)</span> · <i class="fas fa-check-circle" style="color:#eab308;"></i> <span data-key="lang2">Français (moyen)</span> · <i class="fas fa-check-circle" style="color:#eab308;"></i> <span data-key="lang3">Anglais (moyen)</span></p>
-    </footer>
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({ duration: 500, once: true });
-        
-        const translations = {
-            fr: {
-                greeting: "👋 Bonjour, je suis", profession: "Acheteur · Gestionnaire de Stock · Chef Magasin",
-                description: "Professionnel polyvalent avec plus de 15 ans d'expérience en gestion des stocks, achats hôteliers, maintenance technique et développement.",
-                stat1: "Années", stat2: "Magasins créés", stat3: "Pertes", btn1: "Me contacter", btn2: "Voir mes fonctions",
-                functionsTitle: "Fonctions", skillsTitle: "Compétences Techniques", expTitle: "Professionnelle", certsTitle: "Certifications",
-                projectsTitle: "Projets", ecomTitle: "Projets personnels", ecomValue: "Commerce Électronique", ecomDesc: "Expérience dans la création et la gestion de boutiques en ligne. Maîtrise : gestion des commandes, suivi des stocks, relation clients, logistique.",
-                interestsTitle: "Centres d'intérêt", interest1: "Programmation", interest2: "Football", interest3: "Voyages",
-                faqTitle: "recruteurs", contactTitle: "Contacter", addressTitle: "Adresse", phoneTitle: "Téléphone", emailTitle: "Email", whatsappTitle: "WhatsApp",
-                mobility: "Véhicule personnel · Mobilité totale · Disponible immédiatement", footer1: "Acheteur · Gestionnaire de Stock · Chef Magasin",
-                lang1: "Arabe (Langue maternelle)", lang2: "Français (Lu, écrit, parlé - niveau moyen)", lang3: "Anglais (Lu, écrit, parlé - niveau moyen)"
-            },
-            en: {
-                greeting: "👋 Hello, I am", profession: "Buyer · Stock Manager · Warehouse Manager",
-                description: "Versatile professional with over 15 years of experience in stock management, hotel purchasing, technical maintenance and development.",
-                stat1: "Years", stat2: "Warehouses", stat3: "Losses", btn1: "Contact me", btn2: "My functions",
-                functionsTitle: "Functions", skillsTitle: "Technical Skills", expTitle: "Professional", certsTitle: "Certifications",
-                projectsTitle: "Projects", ecomTitle: "Personal projects", ecomValue: "E-commerce", ecomDesc: "Experience in creating and managing online stores. Mastery: order management, stock tracking, customer relations, logistics.",
-                interestsTitle: "Interests", interest1: "Programming", interest2: "Football", interest3: "Travel",
-                faqTitle: "recruiters", contactTitle: "Contact", addressTitle: "Address", phoneTitle: "Phone", emailTitle: "Email", whatsappTitle: "WhatsApp",
-                mobility: "Personal vehicle · Full mobility · Immediately available", footer1: "Buyer · Stock Manager · Warehouse Manager",
-                lang1: "Arabic (Native)", lang2: "French (Intermediate)", lang3: "English (Intermediate)"
-            }
-        };
-
-        let currentLang = 'fr';
-
-        function updateLanguage() {
-            document.querySelectorAll('[data-key]').forEach(el => {
-                const key = el.getAttribute('data-key');
-                if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
-            });
-            document.getElementById('langToggle').innerHTML = currentLang === 'fr' ? '🇬🇧 EN' : '🇫🇷 FR';
-            renderFunctions(); renderSkills(); renderExperience(); renderFormations(); renderFaq();
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 600, once: true });
+    // Données complètes (sans aucun mot raccourci)
+    const texts = {
+        fr: {
+            profession: "Acheteur · Gestionnaire de Stock · Chef Magasin",
+            description: "Professionnel polyvalent avec plus de 15 ans d'expérience en gestion des stocks, achats hôteliers, maintenance technique et développement.",
+            stat1: "Années", stat2: "Magasins créés", stat3: "Pertes", btn1: "Me contacter", btn2: "Voir mes fonctions",
+            mobility: "Véhicule personnel · Mobilité totale · Disponible immédiatement",
+            langFooter: "Arabe (natif) · Français (moyen) · Anglais (moyen)"
+        },
+        en: {
+            profession: "Buyer · Stock Manager · Warehouse Manager",
+            description: "Versatile professional with over 15 years of experience in stock management, hotel purchasing, technical maintenance and development.",
+            stat1: "Years", stat2: "Warehouses created", stat3: "Losses", btn1: "Contact me", btn2: "My functions",
+            mobility: "Personal vehicle · Full mobility · Immediately available",
+            langFooter: "Arabic (native) · French (intermediate) · English (intermediate)"
         }
-
-        function renderFunctions() {
-            const data = currentLang === 'fr' ? [
-                { title: "Fonction Acheteur", subtitle: "Gestion des Approvisionnements", tasks: ["Recherche et sélection des fournisseurs", "Négociation des prix", "Établissement des bons de commande", "Suivi des commandes", "Achat équipements", "Réception et contrôle", "Saisie factures", "Rapprochement inventaire physique/théorique"] },
-                { title: "Fonction Gestionnaire de Stock", subtitle: "Pilotage et Optimisation", tasks: ["Gestion sur HOTIX & DLG", "Inventaires mensuels", "Rapprochement inventaire", "Classification ABC", "Suivi FIFO/LIFO", "Rapports consommation", "Maîtrise des pertes"] },
-                { title: "Fonction Chef Magasin", subtitle: "Organisation et Logistique", tasks: ["Création 6 magasins", "Organisation HACCP", "Gestion 900+ références", "Réception marchandises", "Bons de sortie", "Conduite Mini Clark", "Formation stagiaires"] }
-            ] : [
-                { title: "Buyer Function", subtitle: "Supply Management", tasks: ["Supplier research & selection", "Price negotiation", "Purchase order creation", "Order tracking", "Equipment purchasing", "Receiving & control", "Invoice entry", "Inventory reconciliation"] },
-                { title: "Stock Manager Function", subtitle: "Monitoring & Optimization", tasks: ["HOTIX & DLG management", "Monthly inventories", "Inventory reconciliation", "ABC classification", "FIFO/LIFO tracking", "Consumption reports", "Loss control"] },
-                { title: "Warehouse Manager", subtitle: "Organization & Logistics", tasks: ["6 warehouses created", "HACCP organization", "900+ references", "Goods reception", "Exit slips", "Mini Clark driving", "Trainee training"] }
-            ];
-            document.getElementById('functionsGrid').innerHTML = data.map(f => `<div class="function-card"><div class="function-icon"><i class="fas ${f.title.includes('Acheteur')||f.title.includes('Buyer')?'fa-cart-shopping':(f.title.includes('Gestionnaire')||f.title.includes('Stock Manager')?'fa-chart-pie':'fa-warehouse')}"></i></div><h3>${f.title}</h3><div class="function-subtitle">${f.subtitle}</div><ul class="task-list">${f.tasks.map(t=>`<li><i class="fas fa-check-circle"></i> ${t}</li>`).join('')}</ul></div>`).join('');
-        }
-
-        function renderSkills() {
-            const data = currentLang === 'fr' ? [
-                { title: "Logiciels", items: ["HOTIX", "DLG PC STOCK", "Excel Avancé"] },
-                { title: "Développement", items: ["HTML/CSS/JS", "C# .NET", "Design Web"] },
-                { title: "Technique", items: ["Maintenance", "Soudure TIG", "Mini Clark"] },
-                { title: "Atouts", items: ["Rigueur", "Polyvalence", "Créativité"] }
-            ] : [
-                { title: "Software", items: ["HOTIX", "DLG PC STOCK", "Advanced Excel"] },
-                { title: "Development", items: ["HTML/CSS/JS", "C# .NET", "Web Design"] },
-                { title: "Technical", items: ["Maintenance", "TIG Welding", "Mini Clark"] },
-                { title: "Assets", items: ["Rigor", "Versatility", "Creativity"] }
-            ];
-            document.getElementById('skillsGrid').innerHTML = data.map(s => `<div class="skill-category"><h4><i class="fas fa-star"></i> ${s.title}</h4><ul>${s.items.map(i=>`<li><i class="fas fa-check"></i> ${i}</li>`).join('')}</ul></div>`).join('');
-        }
-
-        function renderExperience() {
-            const data = currentLang === 'fr' ? [
-                { title: "Acheteur & Gestionnaire de Stock & Chef Magasin", company: "Hôtel RALF · Alger", date: "2025 – Présent", current: true, achievements: ["Création de 6 magasins", "Réduction des pertes", "Création documents", "Achat équipements", "Mise conformité HACCP", "Rapprochement inventaire"] },
-                { title: "Agent Technique Polyvalent", company: "Hôtel Hani · Bab Ezzouar", date: "Mars 2022 – Août 2025", current: false, achievements: ["Maintenance quotidienne", "Réduction des pannes 20%"] },
-                { title: "Magasinier / Gestionnaire de Stock", company: "Hôtel Hani · Bab Ezzouar", date: "Août 2018 – Mars 2022", current: false, achievements: ["Gestion 900+ articles", "Organisation HACCP/FIFO/ABC", "Rapports consommation"] },
-                { title: "Plaquiste / Décorateur", company: "Hôtel Hani (Projet)", date: "Juin 2014 – Juillet 2016", current: false, achievements: ["Installation plafonds suspendus", "Rénovation 100 chambres"] },
-                { title: "Soudeur Pipeline NIV 5", company: "ENTP · Hassi Messaoud", date: "Déc 2013 – Juin 2014", current: false, achievements: ["Soudure TIG acier/inox", "100% conformité qualité"] },
-                { title: "Soudeur Naval", company: "ERENAV · Port d'Alger", date: "Fév 2009 – Juil 2012", current: false, achievements: ["Réparation navires", "+20 projets navals"] }
-            ] : [
-                { title: "Buyer & Stock Manager & Warehouse Manager", company: "Hotel RALF · Algiers", date: "2025 – Present", current: true, achievements: ["6 warehouses created", "Loss reduction", "Document creation", "Equipment purchasing", "HACCP compliance", "Inventory reconciliation"] },
-                { title: "Multipurpose Technical Agent", company: "Hotel Hani · Bab Ezzouar", date: "Mar 2022 – Aug 2025", current: false, achievements: ["Daily maintenance", "20% breakdown reduction"] },
-                { title: "Storekeeper / Stock Manager", company: "Hotel Hani · Bab Ezzouar", date: "Aug 2018 – Mar 2022", current: false, achievements: ["900+ items management", "HACCP/FIFO/ABC", "Consumption reports"] },
-                { title: "Drywaller / Decorator", company: "Hotel Hani (Project)", date: "Jun 2014 – Jul 2016", current: false, achievements: ["Suspended ceilings", "100 rooms renovation"] },
-                { title: "Pipeline Welder Level 5", company: "ENTP · Hassi Messaoud", date: "Dec 2013 – Jun 2014", current: false, achievements: ["TIG steel/stainless welding", "100% quality compliance"] },
-                { title: "Naval Welder", company: "ERENAV · Algiers Port", date: "Feb 2009 – Jul 2012", current: false, achievements: ["Ship repair", "+20 naval projects"] }
-            ];
-            document.getElementById('experienceList').innerHTML = data.map(e => `<div class="exp-item ${e.current ? 'current' : ''}"><div class="exp-header"><div><div class="exp-title">${e.title}</div><div class="exp-company">${e.company}</div></div><div class="exp-date ${e.current ? 'current-badge' : ''}">${e.date}</div></div><ul class="achievement-list">${e.achievements.map(a=>`<li><i class="fas fa-check-circle"></i> ${a}</li>`).join('')}</ul></div>`).join('');
-        }
-
-        function renderFormations() {
-            const data = currentLang === 'fr' ? [
-                { title: "DLG PC STOCK", year: "2026", org: "Centre de Formation" }, { title: "Gestion des Stocks HOTIX", year: "2018", org: "Service et Solutions Info" }, { title: "Soudage TIG", year: "2013", org: "École Famme Bleue" }
-            ] : [
-                { title: "DLG PC STOCK", year: "2026", org: "Training Center" }, { title: "Stock Management HOTIX", year: "2018", org: "Service et Solutions Info" }, { title: "TIG Welding", year: "2013", org: "École Famme Bleue" }
-            ];
-            document.getElementById('formationsGrid').innerHTML = data.map(f => `<div style="background:linear-gradient(145deg,#1e293b,#111827);padding:16px;border-radius:16px;"><i class="fas fa-certificate" style="font-size:24px;color:#eab308;margin-bottom:8px;"></i><h3 style="color:white;font-size:14px;">${f.title} <span style="background:#10b981;color:white;padding:2px 8px;border-radius:20px;font-size:9px;">${f.year}</span></h3><p style="color:#eab308;font-size:11px;">${f.org}</p></div>`).join('');
-        }
-
-        function renderFaq() {
-            const data = currentLang === 'fr' ? [
-                { q: "Analyse des consommations ?", a: "Sortie stock principal − Stock réserve cuisine centrale = Consommation réelle. Avec contrôle de gestion." },
-                { q: "Calcul coût de revient ?", a: "DLG STOCK + fiche composition : extraction produits + prix achat + frais d'approche = coût unitaire." },
-                { q: "Méthode de classement ?", a: "ABC : A (20% réf = 80% valeur), B (30% réf = 15%), C (50% réf = 5%)." },
-                { q: "Qu'est-ce que FIFO ?", a: "First In First Out. Évite les péremptions." },
-                { q: "Documents produits ?", a: "Bon commande, réception, sortie, PV casse, inventaire, rapport conso." },
-                { q: "Réduction des pertes ?", a: "Contrôle réception, rangement organisé, inventaires tournants. Résultat <1%." }
-            ] : [
-                { q: "Consumption analysis?", a: "Main stock output − Central kitchen reserve stock = Real consumption. With management control." },
-                { q: "Cost price calculation?", a: "DLG STOCK + composition sheet: product extraction + purchase price + approach costs = unit cost." },
-                { q: "Classification method?", a: "ABC: A (20% ref = 80% value), B (30% ref = 15%), C (50% ref = 5%)." },
-                { q: "What is FIFO?", a: "First In First Out. Avoids expiration." },
-                { q: "Documents produced?", a: "Purchase order, receipt, exit slip, breakage report, inventory, consumption report." },
-                { q: "Loss reduction?", a: "Receipt control, organized storage, rotating inventories. Result <1%." }
-            ];
-            document.getElementById('faqGrid').innerHTML = data.map(f => `<div class="faq-item"><div class="faq-question"><i class="fas fa-question-circle"></i> ${f.q}</div><div class="faq-answer">${f.a}</div></div>`).join('');
-        }
-
-        document.getElementById('langToggle').addEventListener('click', () => { currentLang = currentLang === 'fr' ? 'en' : 'fr'; updateLanguage(); });
-        document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', function(e) { e.preventDefault(); const t = document.querySelector(this.getAttribute('href')); if(t) window.scrollTo({ top: t.offsetTop - 65, behavior: 'smooth' }); }));
-        
-        renderFunctions(); renderSkills(); renderExperience(); renderFormations(); renderFaq(); updateLanguage();
-    </script>
+    };
+    let currentLang = 'fr';
+    function updateTexts() {
+        const t = texts[currentLang];
+        document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if (t[key]) el.innerText = t[key];
+        });
+        document.getElementById('langToggle').innerHTML = currentLang === 'fr' ? '🇬🇧 EN' : '🇫🇷 FR';
+        renderAll();
+    }
+    function renderAll() {
+        // Fonctions (avec listes longues, aucun texte supprimé)
+        const functions = currentLang === 'fr' ? [
+            { icon: "fa-cart-shopping", title: "Fonction Acheteur", sub: "Gestion des Approvisionnements", tasks: ["Recherche et sélection des fournisseurs","Négociation des prix et conditions d'achat","Établissement des bons de commande","Suivi des commandes et relances fournisseurs","Gestion des problèmes de paiement fournisseurs","Élargissement du portefeuille fournisseurs","Achat d'équipements (Rayonnage, Chariots, Frigo...)","Réception et contrôle des marchandises","Saisie et vérification des factures","Rapprochement inventaire physique / théorique avec comptabilité","Création des documents : Bon d'achat, PV Casse","Optimisation du budget achats"] },
+            { icon: "fa-chart-pie", title: "Fonction Gestionnaire de Stock", sub: "Pilotage et Optimisation", tasks: ["Gestion informatisée sur HOTIX et DLG PC STOCK","Inventaires mensuels systématiques","Rapprochement inventaire physique / théorique","Création du Cahier d'Inventaire annuel","Classification ABC des articles","Suivi des dates de péremption (FIFO/LIFO)","Analyse et rapports de consommation mensuelle","Optimisation des niveaux de stock","Réduction des écarts d'inventaire","Maîtrise des pertes et vols","Mise en place de procédures de contrôle","Rapprochement avec contrôle de gestion"] },
+            { icon: "fa-warehouse", title: "Fonction Chef Magasin", sub: "Organisation et Logistique", tasks: ["Création et structuration des magasins","6 magasins créés : Alimentaire, Boissons, Détergent, Bureautique, Vaisselle, Linge","Organisation des rayons selon normes HACCP","Gestion de 900+ références articles","Réception et rangement des marchandises","Saisie des bons de sortie","Préparation et distribution aux services","Maintien de la propreté et de l'ordre","Installation des équipements de stockage","Conduite de Mini Clark","Formation des stagiaires en gestion de stock","Coordination avec les différents services"] }
+        ] : [
+            { icon: "fa-cart-shopping", title: "Buyer Function", sub: "Supply Management", tasks: ["Supplier research & selection","Price negotiation & purchasing conditions","Purchase order creation","Order tracking & supplier reminders","Supplier payment issues management","Supplier portfolio expansion","Equipment purchasing (Shelving, Trolleys, Fridge...)","Goods reception & control","Invoice entry & verification","Physical/theoretical inventory reconciliation with accounting","Document creation : Purchase order, Breakage report","Budget optimization"] },
+            { icon: "fa-chart-pie", title: "Stock Manager Function", sub: "Monitoring & Optimization", tasks: ["Computerized management on HOTIX & DLG PC STOCK","Systematic monthly inventories","Physical/theoretical inventory reconciliation","Annual Inventory Log Book creation","ABC classification of articles","Expiry date tracking (FIFO/LIFO)","Monthly consumption analysis & reports","Stock level optimization","Inventory variance reduction","Loss & theft control","Implementation of control procedures","Reconciliation with management control"] },
+            { icon: "fa-warehouse", title: "Warehouse Manager", sub: "Organization & Logistics", tasks: ["Warehouse creation & structuring","6 warehouses created: Food, Beverages, Detergent, Office, Dishware, Linen","Shelves organization according to HACCP standards","Management of 900+ article references","Goods reception & storage","Exit slip entry","Preparation & distribution to services","Cleanliness & order maintenance","Storage equipment installation","Mini Clark driving","Trainee training in stock management","Coordination with various departments"] }
+        ];
+        document.getElementById('functionsGrid').innerHTML = functions.map(f => `<div class="card-ui"><div class="icon-xl"><i class="fas ${f.icon}"></i></div><h3 style="font-size:1.25rem;">${f.title}</h3><div style="color:#EAB308; font-size:0.75rem;">${f.sub}</div><ul class="list-check" style="margin-top:16px;">${f.tasks.map(t=>`<li><i class="fas fa-check-circle"></i> ${t}</li>`).join('')}</ul></div>`).join('');
+        // Compétences
+        const skills = currentLang === 'fr' ? [
+            ["Logiciels de Gestion",["HOTIX","DLG PC STOCK","DLGC","Excel (Avancé)","Word · PowerPoint"]],
+            ["Développement",["HTML5 · CSS3 · JavaScript","C# .NET","Design Web Responsive","Montage Vidéo","Design Graphique"]],
+            ["Technique & Industrie",["Maintenance polyvalente","Soudure TIG","Plaquisterie","Conduite Mini Clark","Réparation électroménager"]],
+            ["Atouts Personnels",["Résolution de problèmes","Apprentissage rapide","Créativité","Polyvalence","Rigueur et organisation"]]
+        ] : [
+            ["Management Software",["HOTIX","DLG PC STOCK","DLGC","Advanced Excel","Word · PowerPoint"]],
+            ["Development",["HTML5 · CSS3 · JavaScript","C# .NET","Responsive Web Design","Video Editing","Graphic Design"]],
+            ["Technical & Industry",["Multipurpose Maintenance","TIG Welding","Drywall","Mini Clark driving","Appliance repair"]],
+            ["Personal Strengths",["Problem solving","Fast learning","Creativity","Versatility","Rigor & organization"]]
+        ];
+        document.getElementById('skillsGrid').innerHTML = skills.map(s => `<div class="card-ui"><h4 style="color:#EAB308; margin-bottom:12px;"><i class="fas fa-laptop-code"></i> ${s[0]}</h4><div style="display:flex; flex-wrap:wrap; gap:8px;">${s[1].map(i=>`<span class="skill-chip"><i class="fas fa-check"></i> ${i}</span>`).join('')}</div></div>`).join('');
+        // Expérience complète (tous les postes)
+        const exp = currentLang === 'fr' ? [
+            { title:"Acheteur & Gestionnaire de Stock & Chef Magasin", company:"Hôtel RALF · Alger", date:"2025 – Présent", current:true, achievements:["Création de 6 magasins structurés","Réduction significative des pertes & vols","Création documents : Bon sortie, Bon achat, PV Casse","Achat équipements (Rayonnage, Chariots, Frigo...)","Mise en conformité HACCP","Formation de stagiaires","Rapprochement inventaire physique / théorique","Cahier d'Inventaire annuel"] },
+            { title:"Agent Technique Polyvalent", company:"Hôtel Hani · Bab Ezzouar", date:"Mars 2022 – Août 2025", achievements:["Maintenance quotidienne des installations","Réduction des pannes de 20%"] },
+            { title:"Magasinier / Gestionnaire de Stock", company:"Hôtel Hani · Bab Ezzouar", date:"Août 2018 – Mars 2022", achievements:["Gestion de 900+ articles sur HOTIX et DLGC","Organisation selon HACCP, FIFO/LIFO, méthode ABC","Bons de commande, réception, saisie factures","Rapports consommation et rapprochement inventaire"] },
+            { title:"Plaquiste / Décorateur", company:"Hôtel Hani (Projet)", date:"Juin 2014 – Juillet 2016", achievements:["Installation plafonds suspendus et cloisons","Rénovation de 100 chambres"] },
+            { title:"Soudeur Pipeline NIV 5", company:"ENTP · Hassi Messaoud", date:"Déc 2013 – Juin 2014", achievements:["Soudure TIG acier carbone et inox","100% conformité qualité"] },
+            { title:"Soudeur Naval", company:"ERENAV · Port d'Alger", date:"Fév 2009 – Juil 2012", achievements:["Réparation et assemblage de pièces de navires","+20 projets navals réussis"] }
+        ] : [
+            { title:"Buyer & Stock Manager & Warehouse Manager", company:"Hotel RALF · Algiers", date:"2025 – Present", current:true, achievements:["Creation of 6 structured warehouses","Significant reduction of losses & theft","Document creation: Exit slip, Purchase order, Breakage report","Equipment purchasing (Shelving, Trolleys, Fridge...)","HACCP compliance","Trainee training","Physical/theoretical inventory reconciliation","Annual Inventory Log Book"] },
+            { title:"Multipurpose Technical Agent", company:"Hotel Hani · Bab Ezzouar", date:"Mar 2022 – Aug 2025", achievements:["Daily facility maintenance","20% breakdown reduction"] },
+            { title:"Storekeeper / Stock Manager", company:"Hotel Hani · Bab Ezzouar", date:"Aug 2018 – Mar 2022", achievements:["Management of 900+ articles on HOTIX & DLGC","Organization according to HACCP, FIFO/LIFO, ABC method","Purchase orders, reception, invoice entry","Consumption reports & inventory reconciliation"] },
+            { title:"Drywaller / Decorator", company:"Hotel Hani (Project)", date:"Jun 2014 – Jul 2016", achievements:["Installation of suspended ceilings & partitions","Renovation of 100 rooms"] },
+            { title:"Pipeline Welder Level 5", company:"ENTP · Hassi Messaoud", date:"Dec 2013 – Jun 2014", achievements:["TIG welding carbon steel & stainless steel","100% quality compliance"] },
+            { title:"Naval Welder", company:"ERENAV · Algiers Port", date:"Feb 2009 – Jul 2012", achievements:["Repair & assembly of ship parts","+20 successful naval projects"] }
+        ];
+        document.getElementById('expGrid').innerHTML = exp.map(e => `<div class="card-ui"><div class="exp-header-ui"><div><h3 style="font-size:1.1rem;">${e.title}</h3><div style="color:#EAB308;">${e.company}</div></div><div class="exp-badge">${e.date}</div></div><ul class="list-check">${e.achievements.map(a=>`<li><i class="fas fa-check-circle"></i> ${a}</li>`).join('')}</ul></div>`).join('');
+        // Formations
+        const form = currentLang === 'fr' ? [
+            {title:"DLG PC STOCK", year:"2026", org:"Centre de Formation"},
+            {title:"Gestion des Stocks (HOTIX)", year:"2018", org:"Service et Solutions Informatique · Bab Ezzouar"},
+            {title:"Soudage TIG Inox & Carbone", year:"2013", org:"École Famme Bleue · Alger"}
+        ] : [
+            {title:"DLG PC STOCK", year:"2026", org:"Training Center"},
+            {title:"Stock Management (HOTIX)", year:"2018", org:"Service et Solutions Informatique · Bab Ezzouar"},
+            {title:"TIG Welding Stainless & Carbon", year:"2013", org:"École Famme Bleue · Algiers"}
+        ];
+        document.getElementById('formationsGrid').innerHTML = form.map(f => `<div class="card-ui" style="text-align:center;"><i class="fas fa-certificate" style="font-size:2rem; color:#EAB308;"></i><h3 style="margin:8px 0;">${f.title}<span style="background:#10B981; color:white; padding:2px 8px; border-radius:20px; font-size:0.6rem; margin-left:8px;">${f.year}</span></h3><p style="color:#EAB308;">${f.org}</p></div>`).join('');
+        // FAQ
+        const faq = currentLang === 'fr' ? [
+            {q:"Comment analysez-vous les consommations réelles ?", a:"Sortie stock principal − Stock réserve cuisine centrale = Consommation réelle. Contrôle de gestion intégré."},
+            {q:"Comment calculez-vous le coût de revient des recettes ?", a:"DLG STOCK + fiche composition : extraction produits, prix d'achat, conversion production, frais d'approche → coût unitaire précis."},
+            {q:"Quelle méthode pour classer les articles ?", a:"Méthode ABC : A (20% réf = 80% valeur), B (30% réf = 15% valeur), C (50% réf = 5% valeur)."},
+            {q:"C'est quoi FIFO ? Pourquoi important ?", a:"First In, First Out. Essentiel pour éviter les péremptions."},
+            {q:"Quels documents produisez-vous ?", a:"Bon commande, réception, sortie, PV casse, inventaire, rapport conso, rapprochement inventaire."},
+            {q:"Comment réduisez-vous les pertes ?", a:"Contrôle réception, rangement organisé, inventaires tournants, analyse écarts, sécurisation. Résultat <1%."}
+        ] : [
+            {q:"How do you analyze real consumption?", a:"Main stock output − Central kitchen reserve stock = Real consumption. With management control."},
+            {q:"How do you calculate recipe cost price?", a:"DLG STOCK + composition sheet: product extraction, purchase price, production conversion, approach costs → precise unit cost."},
+            {q:"Which method for classifying items?", a:"ABC method: A (20% ref = 80% value), B (30% ref = 15% value), C (50% ref = 5% value)."},
+            {q:"What is FIFO? Why important?", a:"First In, First Out. Essential to avoid expiration."},
+            {q:"What documents do you produce?", a:"Purchase order, receipt, exit slip, breakage report, inventory, consumption report, inventory reconciliation."},
+            {q:"How do you reduce losses?", a:"Receipt control, organized storage, rotating inventories, variance analysis, security. Result <1%."}
+        ];
+        document.getElementById('faqGrid').innerHTML = faq.map(f => `<div class="card-ui"><div class="faq-question" style="color:#EAB308; font-weight:bold; margin-bottom:8px;"><i class="fas fa-question-circle"></i> ${f.q}</div><div class="faq-answer" style="color:#CBD5E1; font-size:0.8rem;">${f.a}</div></div>`).join('');
+        // Contact
+        const contact = [{icon:"fa-map-marker-alt", title:"Adresse", val:"Cité Zerhouni Mokhtar AADL Bt14 N°4 Mohammadia · Alger"},{icon:"fa-phone", title:"Téléphone", val:"07 95 58 24 72"},{icon:"fa-envelope", title:"Email", val:"Bourezaz.work@gmail.com"},{icon:"fab fa-whatsapp", title:"WhatsApp", val:"07 95 58 24 72"}];
+        document.getElementById('contactGrid').innerHTML = contact.map(c => `<div class="card-ui" style="text-align:center;"><i class="fas ${c.icon}" style="font-size:1.8rem; color:#EAB308;"></i><h4>${c.title}</h4><p style="font-size:0.75rem;">${c.val}</p></div>`).join('');
+    }
+    document.getElementById('langToggle').addEventListener('click',()=>{ currentLang = currentLang === 'fr' ? 'en' : 'fr'; updateTexts(); });
+    updateTexts();
+</script>
 </body>
 </html>
